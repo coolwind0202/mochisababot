@@ -18,5 +18,7 @@ async def on_message(message):
         await message.channel.send("おしりの"+reply) # 返信メッセージを送信
     if message.content.startswith('プリコネ'):
         await message.channel.send('ブヒブヒ')
+    if message.content.startswith('プリンセスコネクト'):
+        await message.channel.send('Re:Dive！')
 
 client.run("NTk2ODkwMDgyNTkwNDU3ODU4.XSAHag.OqmhJ_QIqTIaWQ2R7uZwbHxRW0E")
