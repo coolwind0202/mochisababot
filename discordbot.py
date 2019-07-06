@@ -16,5 +16,7 @@ async def on_message(message):
     if client.user in message.mentions: # 話しかけられたかの判定
         reply =  message.guild.get_member(285999013310889995).mention # 返信メッセージの作成
         await message.channel.send("おしりの"+reply) # 返信メッセージを送信
+    if message.content.startswith('プリコネ'):
+        await message.channel.send('ブヒブヒ')
 
 client.run("NTk2ODkwMDgyNTkwNDU3ODU4.XSAHag.OqmhJ_QIqTIaWQ2R7uZwbHxRW0E")
