@@ -20,5 +20,9 @@ async def on_message(message):
         await message.channel.send('ブヒブヒ')
     if message.content.startswith('プリンセスコネクト'):
         await message.channel.send('Re:Dive！')
+    if message.content.startswith('君の名は'):
+        await message.channel.send('三葉の口噛み酒飲みたい')
+    if message.content.startswith('ゆうと'):
+        await message.channel.send('大好き♡')
 
 client.run("NTk2ODkwMDgyNTkwNDU3ODU4.XSAHag.OqmhJ_QIqTIaWQ2R7uZwbHxRW0E")
