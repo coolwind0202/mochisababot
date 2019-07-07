@@ -22,7 +22,24 @@ async def on_message(message):
         await message.channel.send('Re:Dive！')
     if message.content.startswith('君の名は'):
         await message.channel.send('三葉の口噛み酒飲みたい')
-    if message.content.startswith('ゆうと'):
+    if message.content.startswith('ゆうと')or message.content.startswith('えもん'):
         await message.channel.send('大好き♡')
+    if message.content.startswith('たれぞう'):
+        await message.channel.send(random.choice(('OC', 'たけぞうですっ')))
+    if message.content.startswith('重本ことり'):
+        await message.channel.send("フンガーッ（鼻息）")
+    if message.content.startswith('ばーすと'):
+        await message.channel.send('お、おうｗ'):
+    if message.content.startswith('カーボン'):
+        await message.channel.send('最強'):
+    if message.content.startswith('座右の銘'):
+        await message.channel.send('とりあえずオナニー'):
+    if message.content.startswith('ふうきる'):
+        await message.channel.send(random.choice(('よ', 'ガイガイガイ')))
+    if message.content.startswith('アカツキ'):
+        await message.channel.send('しつけえんだよマジで'):
+    
+
+    
 
 client.run("NTk2ODkwMDgyNTkwNDU3ODU4.XSAHag.OqmhJ_QIqTIaWQ2R7uZwbHxRW0E")
