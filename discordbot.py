@@ -29,15 +29,15 @@ async def on_message(message):
     if message.content.startswith('重本ことり'):
         await message.channel.send("フンガーッ（鼻息）")
     if message.content.startswith('ばーすと'):
-        await message.channel.send('お、おうｗ'):
+        await message.channel.send('お、おうｗ')
     if message.content.startswith('カーボン'):
-        await message.channel.send('最強'):
+        await message.channel.send('最強')
     if message.content.startswith('座右の銘'):
-        await message.channel.send('とりあえずオナニー'):
+        await message.channel.send('とりあえずオナニー')
     if message.content.startswith('ふうきる'):
         await message.channel.send(random.choice(('よ', 'ガイガイガイ')))
     if message.content.startswith('アカツキ'):
-        await message.channel.send('しつけえんだよマジで'):
+        await message.channel.send('しつけえんだよマジで')
     
 
     
