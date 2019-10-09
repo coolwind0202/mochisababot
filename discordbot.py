@@ -72,7 +72,7 @@ async def quiz():
 
 @tasks.loop(seconds=30)
 async def change():
-    n = math.floor((bot.scount/bot.q_count)*100)
+    n = math.floor((bot.s_count/bot.q_count)*100)
     await bot.change_presence(activity=discord.Game(name='{bot.q_count}問／{bot.s_count} 正解({n}%)'))
             
 bot.run(token)
