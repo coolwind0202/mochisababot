@@ -40,7 +40,6 @@ async def quiz():
         l = ["残念","正解","時間切れ"]
         return m.author == bot.tao and any(i in m.embeds[0].description for i in l)
 
-    await bot.ch.send("::t")
     msg = await bot.wait_for('message',check=check)
 
     while not msg.embeds[0].description.startswith("「"):
@@ -75,6 +74,6 @@ async def quiz():
             
     n = math.floor((bot.s_count/bot.q_count)*100)
     await bot.change_presence(activity=discord.Game(name=f'{bot.q_count}問／{bot.s_count} 正解({n}%)'))
-    #await bot.ch.send("::t")
+    await bot.ch.send("::t")
 
 bot.run(token)
