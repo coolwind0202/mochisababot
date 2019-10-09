@@ -1,46 +1,48 @@
 import discord
-import random
+from discord.ext import commands,tasks
+import asyncio
+import re
+import aiohttp
+import urllib
+from bs4 import BeautifulSoup
 
-client = discord.Client()
+bot = commands.Bot(command_prefix="!")
 
-@client.event
+TOKEN = "NjI1NTc2MTEzNTAyMDI3Nzg2.XYhjMA.tv4-UoXfB4GlmJqs48RydeA5lbc"
+#TOKEN = "NTkwMTM4NTE5NjUwMDQxODc2.XZybdw.Usd-s0sSYefjkH24yy077Xbk22Y"
+
+@bot.event
 async def on_ready():
-    print('Logged in as')
-    print(client.user.name)
-    print(client.user.id)
-    print('------')
+    print("開始")
+    bot.ch = bot.get_channel(597269336981504022)
+    bot.session = aiohttp.ClientSession()
+    q.start()
 
+@tasks.loop(seconds=15)
+async def q():
 
+    await bot.ch.send("::t")
+    msg = await bot.wait_for('message',check=lambda m:m.author.id==526620171658330112)
 
-@client.event
-async def on_message(message):
-    if client.user in message.mentions: # 話しかけられたかの判定
-        reply =  message.guild.get_member(285999013310889995).mention # 返信メッセージの作成
-        await message.channel.send("おしりの"+reply) # 返信メッセージを送信
-    if message.content.startswith('プリコネ'):
-        await message.channel.send('ブヒブヒ')
-    if message.content.startswith('プリンセスコネクト'):
-        await message.channel.send('Re:Dive！')
-    if message.content.startswith('君の名は'):
-        await message.channel.send('三葉の口噛み酒飲みたい')
-    if message.content.startswith('ゆうと')or message.content.startswith('えもん'):
-        await message.channel.send('大好き♡')
-    if message.content.startswith('たれぞう'):
-        await message.channel.send(random.choice(('OC', 'たけぞうですっ')))
-    if message.content.startswith('重本ことり'):
-        await message.channel.send("フンガーッ（鼻息）")
-    if message.content.startswith('ばーすと'):
-        await message.channel.send('お、おうｗ')
-    if message.content.startswith('カーボン'):
-        await message.channel.send('最強')
-    if message.content.startswith('座右の銘'):
-        await message.channel.send('とりあえずオナニー')
-    if message.content.startswith('ふうきる'):
-        await message.channel.send(random.choice(('よ', 'ガイガイガイ')))
-    if message.content.startswith('アカツキ'):
-        await message.channel.send('しつけえんだよマジで')
-    
+    if msg.embeds:
 
-    
+        s = msg.embeds[0].description
+        s = re.search("「(.*)」の読み方をひらがなで答えなさい。",s).group(1)
 
-client.run("NTk2ODkwMDgyNTkwNDU3ODU4.XSAHag.OqmhJ_QIqTIaWQ2R7uZwbHxRW0E")
+        url = f"https://dictionary.goo.ne.jp/word/{urllib.parse.quote(s)}/"
+        
+        async with bot.session.get(url) as resp:
+            text = await resp.text()
+            parsed = BeautifulSoup(text, "html.parser")
+
+        result = re.search(".*\((.*)\)の意味・使い方 - 四字熟語一覧 - goo辞書",str(parsed.title))
+        
+        await asyncio.sleep(5)
+
+        if result:
+            await bot.ch.send(result.group(1))
+        else:
+            await bot.ch.send("わからない")
+        
+
+bot.run(TOKEN)
