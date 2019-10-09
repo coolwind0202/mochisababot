@@ -5,6 +5,7 @@ import re
 import aiohttp
 import urllib
 import os
+import math
 from bs4 import BeautifulSoup
 
 bot = commands.Bot(command_prefix="!")
@@ -67,8 +68,9 @@ async def quiz():
         if ans_m.embeds[0].description.startswith("正解"):
             bot.s_count += 1
 
-@bot.command()
-async def info(ctx):
-    await ctx.send(f"稼働開始からの問題数：{bot.q_count}\n正解数：{bot.s_count}")
-
+@tasks.loop(seconds=30)
+async def change():
+    n = math.floor((bot.scount/bot.q_count)*100)
+    await bot.change_presence(activity=discord.Game(name='{bot.q_count}問／{bot.s_count} 正解({n}%)'))
+            
 bot.run(token)
