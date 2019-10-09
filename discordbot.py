@@ -23,7 +23,7 @@ async def on_ready():
 async def q():
     
     def check(m):
-        s = m.embed[0].description
+        s = m.embeds[0].description
         return m.author.id==526620171658330112 and (not s.startswith("時間切れ") and not s.startswith("正解だ") and not s.startswith("残念"))
 
     await bot.ch.send("::t")
