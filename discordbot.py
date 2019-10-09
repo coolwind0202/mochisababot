@@ -21,6 +21,11 @@ async def on_ready():
 
 @tasks.loop(seconds=15)
 async def q():
+    
+    def check(m):
+        if m.embeds:
+            s = m.embed[0].description
+            return m.author.id== and (not s.startswith("時間切れ") and not s.startswith("正解だ") and not s.startswith("残念"))
 
     await bot.ch.send("::t")
     msg = await bot.wait_for('message',check=lambda m:m.author.id==526620171658330112)
@@ -28,7 +33,11 @@ async def q():
     if msg.embeds:
 
         s = msg.embeds[0].description
-        s = re.search("「(.*)」の読み方をひらがなで答えなさい。",s).group(1)
+        s = re.search("「(.*)」の読み方をひらがなで答えなさい。",s)
+        
+        if not s:
+            return
+        s = s.group(1)
 
         url = f"https://dictionary.goo.ne.jp/word/{urllib.parse.quote(s)}/"
         
