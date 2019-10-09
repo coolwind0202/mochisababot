@@ -71,6 +71,6 @@ async def quiz():
             bot.s_count += 1
             
         n = math.floor((bot.s_count/bot.q_count)*100)
-        await bot.change_presence(activity=discord.Game(name='{bot.q_count}問／{bot.s_count} 正解({n}%)'))
+        await bot.change_presence(activity=discord.Game(name=f'{bot.q_count}問／{bot.s_count} 正解({n}%)'))
 
 bot.run(token)
