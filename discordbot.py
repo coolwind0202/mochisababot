@@ -44,5 +44,5 @@ async def q():
         else:
             await bot.ch.send("わからない")
         
-
+print(TOKEN)
 bot.run(TOKEN)
