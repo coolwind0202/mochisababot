@@ -4,6 +4,7 @@ import asyncio
 import re
 import aiohttp
 import urllib
+import os
 from bs4 import BeautifulSoup
 
 bot = commands.Bot(command_prefix="!")
