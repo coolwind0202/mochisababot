@@ -23,8 +23,6 @@ async def on_ready():
 
     bot.q_count = 0
     bot.s_count = 0
-    
-    change.start()
 
 async def quiz():
     msg = ""
