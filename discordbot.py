@@ -14,7 +14,7 @@ TOKEN = "NjI1NTc2MTEzNTAyMDI3Nzg2.XYhjMA.tv4-UoXfB4GlmJqs48RydeA5lbc"
 @bot.event
 async def on_ready():
     print("開始")
-    bot.ch = bot.get_channel(597269336981504022)
+    bot.ch = bot.get_channel(603442982057934854)
     bot.session = aiohttp.ClientSession()
     q.start()
 
