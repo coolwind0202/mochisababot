@@ -69,12 +69,8 @@ async def quiz():
 
         if ans_m.embeds[0].description.startswith("正解"):
             bot.s_count += 1
-
-@tasks.loop(seconds=30)
-async def change():
-    print("?")
-    n = math.floor((bot.s_count/bot.q_count)*100)
-    print(n)
-    await bot.change_presence(activity=discord.Game(name='{bot.q_count}問／{bot.s_count} 正解({n}%)'))
             
+        n = math.floor((bot.s_count/bot.q_count)*100)
+        await bot.change_presence(activity=discord.Game(name='{bot.q_count}問／{bot.s_count} 正解({n}%)'))
+
 bot.run(token)
