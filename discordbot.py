@@ -8,8 +8,8 @@ from bs4 import BeautifulSoup
 
 bot = commands.Bot(command_prefix="!")
 
-TOKEN = 'NjI1NTc2MTEzNTAyMDI3Nzg2.XZ2obg.ob216fFG9neBp3GHOoqIWkL28Gs'
-#TOKEN = "NTkwMTM4NTE5NjUwMDQxODc2.XZybdw.Usd-s0sSYefjkH24yy077Xbk22Y"
+token = os.environ['DISCORD_BOT_TOKEN']
+
 
 @bot.event
 async def on_ready():
@@ -44,4 +44,4 @@ async def q():
         else:
             await bot.ch.send("わからない")
         
-bot.run(TOKEN)
+bot.run(token)
