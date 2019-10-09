@@ -27,7 +27,8 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     if message.content == "::t":
-        await quiz()
+        pass
+        #await quiz()
 
 async def quiz():
     msg = ""
