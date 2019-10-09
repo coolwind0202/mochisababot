@@ -25,10 +25,10 @@ async def q():
     def check(m):
         if m.embeds:
             s = m.embed[0].description
-            return m.author.id== and (not s.startswith("時間切れ") and not s.startswith("正解だ") and not s.startswith("残念"))
+            return m.author.id==526620171658330112 and (not s.startswith("時間切れ") and not s.startswith("正解だ") and not s.startswith("残念"))
 
     await bot.ch.send("::t")
-    msg = await bot.wait_for('message',check=lambda m:m.author.id==526620171658330112)
+    msg = await bot.wait_for('message',check=check)
 
     if msg.embeds:
 
