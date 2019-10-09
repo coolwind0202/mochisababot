@@ -22,6 +22,7 @@ async def on_ready():
 
     bot.q_count = 0
     bot.s_count = 0
+    await bot.ch.send("::t")
 
 @bot.event
 async def on_message(message):
@@ -48,7 +49,7 @@ async def quiz():
     s = re.search("「(.*)」の読み方をひらがなで答えなさい。",s)
 
     if s is None:
-        continue
+        return
 
     s = s.group(1)
     url = f"https://dictionary.goo.ne.jp/word/{urllib.parse.quote(s)}/"
