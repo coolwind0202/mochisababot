@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 
 bot = commands.Bot(command_prefix="!")
 
-TOKEN = "NjI1NTc2MTEzNTAyMDI3Nzg2.XYhjMA.tv4-UoXfB4GlmJqs48RydeA5lbc"
+TOKEN = "NTk2ODkwMDgyNTkwNDU3ODU4.XZ2mLA.k40ZuezSX1RD_HVN_4_ag0-zU-Y"
 #TOKEN = "NTkwMTM4NTE5NjUwMDQxODc2.XZybdw.Usd-s0sSYefjkH24yy077Xbk22Y"
 
 @bot.event
