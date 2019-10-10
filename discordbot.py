@@ -95,7 +95,7 @@ async def quiz():
     else:
         await bot.ch.send(bot.already_word[s])
 
-
+    print(bot.already_word)
     ans_m = await bot.wait_for('message',check=end_check)
     bot.q_count += 1
 
@@ -104,6 +104,7 @@ async def quiz():
             
     n = math.floor((bot.s_count/bot.q_count)*100)
     await bot.change_presence(activity=discord.Game(name=f'{bot.q_count}問／{bot.s_count} 正解({n}%)'))
+
     if bot.flag == True:
         await bot.ch.send("::t")
     
