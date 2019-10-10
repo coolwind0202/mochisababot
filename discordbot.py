@@ -18,7 +18,7 @@ async def on_ready():
     print("開始")
     bot.ch = bot.get_channel(610766813533306880)
     bot.tao = bot.ch.guild.get_member(526620171658330112)
-    bot.flag = False
+    bot.flag = True
     bot.true_flag = True
 
     bot.session = aiohttp.ClientSession()
@@ -46,6 +46,7 @@ async def check_last():
     print("check")
     tmp_timediff = datetime.datetime.now() - bot.ch.last_message.created_at
     last_message_time = tmp_timediff.total_seconds()
+    print(last_message_time)
     
     if last_message_time > 300 and bot.flg == True:
         await bot.ch.send("::t") 
