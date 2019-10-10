@@ -75,7 +75,7 @@ async def quiz():
         parsed = BeautifulSoup(text, "html.parser")
             
     result = re.search("「.*」（(.*)）の意味",str(parsed.title))
-    await asyncio.sleep(5)
+    await asyncio.sleep(15)
 
     if result:
         await bot.ch.send(result.group(1).replace("（","").replace("）",""))
