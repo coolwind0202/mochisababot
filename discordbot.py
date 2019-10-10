@@ -18,6 +18,7 @@ async def on_ready():
     print("開始")
     bot.ch = bot.get_channel(610766813533306880)
     bot.tao = bot.ch.guild.get_member(526620171658330112)
+    bot.flag = False
 
     bot.session = aiohttp.ClientSession()
 
@@ -29,7 +30,10 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     if message.content == "::t":
-        await quiz()
+        if bot.flag == True:
+            await quiz()
+    if message.content == "!flg":
+        bot.flag = not bot.flag
         
 @tasks.loop(minutes=3)
 async def check_last():
@@ -71,7 +75,7 @@ async def quiz():
     await asyncio.sleep(5)
 
     if result:
-        await bot.ch.send(result.group(1))
+        await bot.ch.send(result.group(1).replace("（","").replace("）",""))
     else:
         await bot.ch.send("わからない")
 
