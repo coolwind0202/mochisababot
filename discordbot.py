@@ -16,7 +16,7 @@ token = os.environ['DISCORD_BOT_TOKEN']
 @bot.event
 async def on_ready():
     print("開始")
-    bot.ch = bot.get_channel(603442982057934854)
+    bot.ch = bot.get_channel(610766813533306880)
     bot.tao = bot.ch.guild.get_member(526620171658330112)
 
     bot.session = aiohttp.ClientSession()
