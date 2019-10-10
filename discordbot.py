@@ -86,17 +86,17 @@ async def quiz():
             
         result = re.search("「.*」（(.*)）の意味",str(parsed.title))
  
-
+        await asyncio.sleep(10)
         if result:
             await bot.ch.send(result.group(1).replace("（","").replace("）",""))
             bot.already_word[s] = result.group(1).replace("（","").replace("）","")
         else:
             await bot.ch.send("わからない")
     else:
-        await asyncio.sleep(15)
+        await asyncio.sleep(10)
+        print(bot.already_word[s])
         await bot.ch.send(bot.already_word[s])
 
-    print(bot.already_word)
     ans_m = await bot.wait_for('message',check=end_check)
     bot.q_count += 1
 
