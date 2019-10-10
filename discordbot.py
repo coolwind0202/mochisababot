@@ -19,6 +19,7 @@ async def on_ready():
     bot.ch = bot.get_channel(610766813533306880)
     bot.tao = bot.ch.guild.get_member(526620171658330112)
     bot.flag = False
+    bot.true_flag = True
 
     bot.session = aiohttp.ClientSession()
 
@@ -30,17 +31,19 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     if message.content == "::t":
-        if bot.flag == True:
+        if bot.true_flag == True:
             await quiz()
-    if message.content == "!flg":
+    if message.content == "!flg": #flgはbotの再開を阻止する
         bot.flag = not bot.flag
+    if message.content == "!sw": #swはbotの回答そのものを阻止する
+        bot.true_flag = not bot.true_flag
         
 @tasks.loop(minutes=3)
 async def check_last():
     tmp_timediff = datetime.datetime.now() - bot.ch.last_message.created_at
     last_message_time = tmp_timediff.total_seconds()
     
-    if last_message_time > 300:
+    if last_message_time > 300 and bot.flg == True:
         await bot.ch.send("::t")
 
 async def quiz():
@@ -87,6 +90,7 @@ async def quiz():
             
     n = math.floor((bot.s_count/bot.q_count)*100)
     await bot.change_presence(activity=discord.Game(name=f'{bot.q_count}問／{bot.s_count} 正解({n}%)'))
-    await bot.ch.send("::t")
+    if bot.flag == True:
+        await bot.ch.send("::t")
     
 bot.run(token)
