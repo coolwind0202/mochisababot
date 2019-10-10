@@ -57,11 +57,11 @@ async def quiz():
     msg = ""
     
     def check(m):
-        return m.author == bot.tao and m.embeds[0].description
+        return m.author == bot.tao and m.embeds and m.embeds[0].description
 
     def end_check(m):
         l = ["残念","正解","時間切れ"]
-        return m.author == bot.tao and any(i in m.embeds[0].description for i in l)
+        return m.author == bot.tao and m.embeds and any(i in m.embeds[0].description for i in l)
 
     msg = await bot.wait_for('message',check=check)
 
@@ -99,6 +99,5 @@ async def quiz():
     await bot.change_presence(activity=discord.Game(name=f'{bot.q_count}問／{bot.s_count} 正解({n}%)'))
     if bot.flag == True:
         await bot.ch.send("::t")
-        print("？")
     
 bot.run(token)
