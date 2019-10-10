@@ -6,6 +6,7 @@ import aiohttp
 import urllib
 import os
 import math
+import datetime
 from bs4 import BeautifulSoup
 
 bot = commands.Bot(command_prefix="!")
@@ -23,12 +24,20 @@ async def on_ready():
     bot.q_count = 0
     bot.s_count = 0
     await bot.ch.send("::t")
+    check_last.start()
 
 @bot.event
 async def on_message(message):
     if message.content == "::t":
-        
         await quiz()
+        
+@tasks.loop(minutes=3)
+async def check_last():
+    tmp_timediff = datetime.datetime.now() - bot.ch.last_message.created_at
+    last_message_time = tmp_timediff.total_seconds()
+    
+    if last_message_time > 300:
+        await bot.ch.send("::t")
 
 async def quiz():
     msg = ""
@@ -52,13 +61,13 @@ async def quiz():
         return
 
     s = s.group(1)
-    url = f"https://dictionary.goo.ne.jp/word/{urllib.parse.quote(s)}/"
+    url = f"https://yoji.jitenon.jp/cat/search.php?getdata={urllib.parse.quote(s)}&search=part&page=1"
         
     async with bot.session.get(url) as resp:
         text = await resp.text()
         parsed = BeautifulSoup(text, "html.parser")
             
-    result = re.search(".*\((.*)\)の意味・使い方 - 四字熟語一覧 - goo辞書",str(parsed.title))
+    result = re.search("「.*」（(.*)）の意味",str(parsed.title))
     await asyncio.sleep(5)
 
     if result:
@@ -75,5 +84,5 @@ async def quiz():
     n = math.floor((bot.s_count/bot.q_count)*100)
     await bot.change_presence(activity=discord.Game(name=f'{bot.q_count}問／{bot.s_count} 正解({n}%)'))
     await bot.ch.send("::t")
-
+    
 bot.run(token)
