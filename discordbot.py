@@ -35,16 +35,22 @@ async def on_message(message):
             await quiz()
     if message.content == "!flg": #flgはbotの再開を阻止する
         bot.flag = not bot.flag
+        await bot.ch.send(f"{not bot.flag} to {bot.flag}")
     if message.content == "!sw": #swはbotの回答そのものを阻止する
         bot.true_flag = not bot.true_flag
+        await bot.ch.send(f"{not bot.true_flag} to {bot.true_flag}")
+        
         
 @tasks.loop(minutes=3)
 async def check_last():
+    print("check")
     tmp_timediff = datetime.datetime.now() - bot.ch.last_message.created_at
     last_message_time = tmp_timediff.total_seconds()
     
     if last_message_time > 300 and bot.flg == True:
-        await bot.ch.send("::t")
+        await bot.ch.send("::t") 
+        print("復帰")
+
 
 async def quiz():
     msg = ""
@@ -75,7 +81,7 @@ async def quiz():
         parsed = BeautifulSoup(text, "html.parser")
             
     result = re.search("「.*」（(.*)）の意味",str(parsed.title))
-    await asyncio.sleep(15)
+    await asyncio.sleep(10)
 
     if result:
         await bot.ch.send(result.group(1).replace("（","").replace("）",""))
@@ -92,5 +98,6 @@ async def quiz():
     await bot.change_presence(activity=discord.Game(name=f'{bot.q_count}問／{bot.s_count} 正解({n}%)'))
     if bot.flag == True:
         await bot.ch.send("::t")
+        print("？")
     
 bot.run(token)
