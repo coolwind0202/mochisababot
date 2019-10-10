@@ -50,7 +50,7 @@ async def check_last():
     print(last_message_time)
     
     if last_message_time > 300 and bot.flg == True:
-        await bot.ch.send("::t") 
+        #await bot.ch.send("::t") 
         print("復帰")
 
 
