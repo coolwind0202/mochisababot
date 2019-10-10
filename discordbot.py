@@ -77,7 +77,7 @@ async def quiz():
 
     s = s.group(1)
 
-    if s not in already_word.keys():
+    if s not in bot.already_word.keys():
         url = f"https://yoji.jitenon.jp/cat/search.php?getdata={urllib.parse.quote(s)}&search=part&page=1"
         
         async with bot.session.get(url) as resp:
@@ -94,6 +94,7 @@ async def quiz():
             await bot.ch.send("わからない")
     else:
         await bot.ch.send(bot.already_word[s])
+
 
     ans_m = await bot.wait_for('message',check=end_check)
     bot.q_count += 1
