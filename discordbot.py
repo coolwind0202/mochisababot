@@ -20,6 +20,7 @@ async def on_ready():
     bot.tao = bot.ch.guild.get_member(526620171658330112)
     bot.flag = True
     bot.true_flag = True
+    bot.already_word = {}
 
     bot.session = aiohttp.ClientSession()
 
@@ -75,19 +76,24 @@ async def quiz():
         return
 
     s = s.group(1)
-    url = f"https://yoji.jitenon.jp/cat/search.php?getdata={urllib.parse.quote(s)}&search=part&page=1"
-        
-    async with bot.session.get(url) as resp:
-        text = await resp.text()
-        parsed = BeautifulSoup(text, "html.parser")
-            
-    result = re.search("「.*」（(.*)）の意味",str(parsed.title))
-    await asyncio.sleep(10)
 
-    if result:
-        await bot.ch.send(result.group(1).replace("（","").replace("）",""))
+    if s not in already_word.keys():
+        url = f"https://yoji.jitenon.jp/cat/search.php?getdata={urllib.parse.quote(s)}&search=part&page=1"
+        
+        async with bot.session.get(url) as resp:
+            text = await resp.text()
+            parsed = BeautifulSoup(text, "html.parser")
+            
+        result = re.search("「.*」（(.*)）の意味",str(parsed.title))
+        await asyncio.sleep(10)
+
+        if result:
+            await bot.ch.send(result.group(1).replace("（","").replace("）",""))
+            bot.already_word[s] = result.group(1)
+        else:
+            await bot.ch.send("わからない")
     else:
-        await bot.ch.send("わからない")
+        await bot.ch.send(bot.already_word[s])
 
     ans_m = await bot.wait_for('message',check=end_check)
     bot.q_count += 1
