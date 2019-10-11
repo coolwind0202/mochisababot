@@ -22,6 +22,7 @@ async def on_ready():
     bot.true_flag = True
     bot.already_word = {}
     bot.bad_word = {}
+    bot.stop = False
 
     bot.session = aiohttp.ClientSession()
 
@@ -33,6 +34,11 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     if message.content == "::t":
+        timediff =  datetime.datetime.now() - message.created_at
+        
+        if timediff.total_seconds() > 300:
+            return
+        
         if bot.true_flag == True:
             await quiz()
     if message.content == "!flg": #flgはbotの再開を阻止する
