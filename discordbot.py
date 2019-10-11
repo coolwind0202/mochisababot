@@ -49,8 +49,8 @@ async def check_last():
     last_message_time = tmp_timediff.total_seconds()
     print(last_message_time)
     
-    if last_message_time > 300 and bot.flg == True:
-        #await bot.ch.send("::t") 
+    if last_message_time > 300 and bot.flag == True:
+        await bot.ch.send("::t") 
         print("復帰")
 
 
