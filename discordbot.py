@@ -21,6 +21,7 @@ async def on_ready():
     bot.flag = True
     bot.true_flag = True
     bot.already_word = {}
+    bot.bad_word = {}
 
     bot.session = aiohttp.ClientSession()
 
@@ -40,18 +41,20 @@ async def on_message(message):
     if message.content == "!sw": #swはbotの回答そのものを阻止する
         bot.true_flag = not bot.true_flag
         await bot.ch.send(f"{not bot.true_flag} to {bot.true_flag}")
-        
+    if message.content == "!log":
+        print(bot.already_word)
+    if message.content == "!bad_word":
+        print(bot.bad_word)
         
 @tasks.loop(minutes=3)
 async def check_last():
-    print("check")
     tmp_timediff = datetime.datetime.now() - bot.ch.last_message.created_at
     last_message_time = tmp_timediff.total_seconds()
-    print(last_message_time)
     
     if last_message_time > 300 and bot.flag == True:
-        await bot.ch.send("::t") 
-        print("復帰")
+        if bot.ch.last_message.content != "::t":
+            await bot.ch.send("::t") 
+            print("復帰")
 
 
 async def quiz():
@@ -86,22 +89,28 @@ async def quiz():
             
         result = re.search("「.*」（(.*)）の意味",str(parsed.title))
  
-        await asyncio.sleep(10)
         if result:
-            await bot.ch.send(result.group(1).replace("（","").replace("）",""))
-            bot.already_word[s] = result.group(1).replace("（","").replace("）","")
+            reply = result.group(1).replace("（","").replace("）","")
         else:
-            await bot.ch.send("わからない")
+            reply = "わからない"
+            
     else:
-        await asyncio.sleep(10)
-        print(bot.already_word[s])
-        await bot.ch.send(bot.already_word[s])
+        reply = bot.already_word[s]
+        
+    await asyncio.sleep(10)    
+    await bot.ch.send(reply)
 
     ans_m = await bot.wait_for('message',check=end_check)
     bot.q_count += 1
 
     if ans_m.embeds[0].description.startswith("正解"):
         bot.s_count += 1
+        if s not in bot.already_word.keys():
+            bot.already_word[s] = reply
+            
+    elif ans_m.embeds[0].description.startswith("残念"):  
+        bot.bad_word[s] = bot.already_word[s] = re.search("残念！正解は「(.*)」だ。",ans_m.embeds[0].description)    
+    
             
     n = math.floor((bot.s_count/bot.q_count)*100)
     await bot.change_presence(activity=discord.Game(name=f'{bot.q_count}問／{bot.s_count} 正解({n}%)'))
