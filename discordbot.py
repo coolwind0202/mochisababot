@@ -49,7 +49,7 @@ async def on_message(message):
                 await quiz(True)
             else:
                 # botを再開すべきでないなら
-                await quiz(false)
+                await quiz(False)
             
     if message.content == "!flg": #flgはbotの再開を阻止する
         bot.flag = not bot.flag
