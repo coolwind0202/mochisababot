@@ -53,10 +53,10 @@ async def on_message(message):
             
     if message.content == "!flg": #flgはbotの再開を阻止する
         bot.flag = not bot.flag
-        await bot.ch.send(f"{not bot.flag} to {bot.flag}")
+        print(f"{not bot.flag} to {bot.flag}")
     if message.content == "!sw": # swはbotの回答そのものを阻止する
         bot.true_flag = not bot.true_flag
-        await bot.ch.send(f"{not bot.true_flag} to {bot.true_flag}")
+        print(f"{not bot.true_flag} to {bot.true_flag}")
     if message.content == "!log": # 全回答ログを表示
         print(bot.already_word)
     if message.content == "!bad_word": # 全不正解ログを表示
