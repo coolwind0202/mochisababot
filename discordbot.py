@@ -87,7 +87,7 @@ async def quiz(send_flag):
         return m.author == bot.tao and m.embeds and any(i in m.embeds[0].description for i in l) 
         # 1問の終了の確認
 
-    msg = await bot.wait_for('message',check=check)
+    msg = await bot.wait_for('message',check=check,timeout=300.0)
 
     while not msg.embeds[0].description.startswith("「"):
         msg = await bot.wait_for('message',check=check)
@@ -121,7 +121,7 @@ async def quiz(send_flag):
     await asyncio.sleep(10)    
     await bot.ch.send(reply) # 答えを送信
 
-    ans_m = await bot.wait_for('message',check=end_check)
+    ans_m = await bot.wait_for('message',check=end_check,timeout=300.0)
     bot.q_count += 1 # 総問題数カウント
 
     if ans_m.embeds[0].description.startswith("正解"):
