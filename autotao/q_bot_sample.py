@@ -12,7 +12,7 @@ client = discord.Client()
 
 @client.event
 async def on_ready():
-    client.ch = client.get_channel(610766813533306880)
+    client.ch = client.get_channel(チャンネルID)
     client.already_quiz = {}
 
     await client.ch.send("::q")
@@ -25,22 +25,17 @@ async def on_message(message):
     if message.content == "::q" and message.author == me:
         def quiz_check(tao_msg):
             if tao_msg.author != tao:
-                print("TAO")
                 return 0
             elif not tao_msg.embeds and not tao_msg.embeds[0].description:
-                print("埋め込み")
                 return 0
             elif tao_msg.embeds[0].author.name != "Quiz":
-                print("Quiz")
                 return 0
             return 1
 
         def ans_check(tao_msg):
             if tao_msg.author != tao:
-                print("TAO")
                 return 0
             elif not tao_msg.embeds and not tao_msg.embeds[0].description:
-                print("埋め込み")
                 return 0
             return 1
         
