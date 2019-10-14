@@ -13,7 +13,7 @@ client = discord.Client()
 
 @client.event
 async def on_ready():
-    client.ch = client.get_channel(610766813533306880)
+    client.ch = client.get_channel(チャンネルID)
     client.words_dict = {}
 
     await client.ch.send("::t")
