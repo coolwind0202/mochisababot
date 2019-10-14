@@ -38,7 +38,6 @@ async def on_message(message):
         if not message.embeds:
 
             if "ダメージ" in message.content:
-                #戦闘中の判定
                 if "HP" in message.content:
                     #まだ倒し切れていない判定
                     if message.guild.me.display_name in message.content:
